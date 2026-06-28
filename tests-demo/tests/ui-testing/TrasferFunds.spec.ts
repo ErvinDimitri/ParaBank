@@ -19,7 +19,7 @@ test.describe('Transfer Funds', ()=>{
         await page.getByText('Transfer Funds').click();
     }
 
-    test.skip('Transfer available funds', async ({ page, baseURL }) => {
+    test('Transfer available funds', async ({ page, baseURL }) => {
         await loadBalances(page, baseURL!);
         let before_sender_available_balance = sender_available_balance;
         let before_receiver_balance = receiver_balance;
