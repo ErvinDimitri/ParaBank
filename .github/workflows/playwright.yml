@@ -73,6 +73,7 @@ jobs:
         PARABANK_APP_LINK: http://localhost:8080/parabank/
         USER_DAN_USERNAME: ${{ secrets.USER_DAN_USERNAME }}
         USER_DAN_PASSWORD: ${{ secrets.USER_DAN_PASSWORD }}
+        CI: ${{ secrets.CI }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
