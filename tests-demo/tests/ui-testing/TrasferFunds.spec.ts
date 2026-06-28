@@ -38,14 +38,21 @@ test.describe('Transfer Funds', ()=>{
         expect(receiver_balance).toEqual(before_receiver_balance + amount);
     });
 
-    test.skip('Transfer negative amount', async ({ page, baseURL }) => {
+    test('Transfer negative amount', async ({ page, baseURL }) => {
         await loadBalances(page, baseURL!);
+        let before_sender_available_balance = sender_available_balance;
+        let before_receiver_balance = receiver_balance;
+        let negativeAmount = -1000;
 
-        let negativeAmount = -1000
         await page.locator('#amount').click();
         await page.locator('#amount').fill(String( negativeAmount));
         await page.locator('#toAccountId').selectOption(receiver_acc);
         await page.getByRole('button', { name: 'Transfer' }).click();
         await expect(page.locator('#showResult')).not.toContainText('-$10000.00 has been transferred from account #'+sender_acc+' to account #'+receiver_acc+'.');
+    
+        //The balances shouldnt update
+        await loadBalances(page, baseURL!);
+        expect(sender_available_balance).toEqual(before_sender_available_balance);
+        expect(receiver_balance).toEqual(before_receiver_balance);
     });
 });
